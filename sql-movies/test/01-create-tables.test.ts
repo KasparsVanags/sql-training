@@ -33,6 +33,7 @@ const CREATE_MOVIE_RATINGS_TABLE = `CREATE TABLE movie_ratings(
   rating real NOT NULL,
   time_created text NOT NULL,
   primary key(user_id, movie_id)
+  FOREIGN KEY (movie_id) REFERENCES movies(id)
 );`;
 
 const CREATE_ACTORS_TABLE = `CREATE TABLE actors(
