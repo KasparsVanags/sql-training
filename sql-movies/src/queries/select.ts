@@ -78,5 +78,5 @@ export const selectProductionCompaniesByMovieId = (movieId: number): string => {
  * select count as c, because an object is returned and expected property name is c
  */
 export const selectCount = (table: string): string => {
-  return `SELECT COUNT(*) AS c FROM ${table}`
+  return `SELECT COUNT() AS c FROM ${table}`
 };

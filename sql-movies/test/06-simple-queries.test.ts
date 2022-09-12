@@ -29,9 +29,9 @@ describe("Simple Queries", () => {
   it(
     "should select count from movies where budget was more than 100000000 and release date after 2009",
     async done => {
-      const query = `SELECT COUNT(*) AS count 
+      const query = `SELECT COUNT() AS count 
       FROM movies 
-      WHERE budget > 100000000 AND release_date >= '2009'`;
+      WHERE budget > 100000000 AND release_date >= 2009`;
       const result = await db.selectSingleRow(query);
 
       expect(result.count).toBe(87);
@@ -46,7 +46,7 @@ describe("Simple Queries", () => {
     async done => {
       const query = `SELECT budget, original_title, revenue 
       FROM movies 
-      WHERE release_date >= '2009' 
+      WHERE release_date >= 2009 
       ORDER BY budget desc 
       LIMIT 3`;
       const result = await db.selectMultipleRows(query);
@@ -77,7 +77,7 @@ describe("Simple Queries", () => {
   it(
     "should select count of movies where homepage is secure (starts with https)",
     async done => {
-      const query = `SELECT COUNT(*) as count 
+      const query = `SELECT COUNT() as count 
       FROM movies 
       WHERE homepage LIKE '%https%'`;
       const result = await db.selectSingleRow(query);
@@ -96,7 +96,7 @@ describe("Simple Queries", () => {
       `SELECT COUNT(strftime('%Y', release_date)) AS count, strftime('%Y', release_date) AS year
       FROM movies 
       GROUP BY year 
-      ORDER BY year desc`;
+      ORDER BY year DESC`;
       const result = await db.selectMultipleRows(query);
 
       expect(result.length).toBe(8);
@@ -126,7 +126,7 @@ describe("Simple Queries", () => {
       const query = `SELECT COUNT(rating) AS count, user_id 
       FROM movie_ratings 
       GROUP BY user_id 
-      ORDER BY count desc 
+      ORDER BY count DESC 
       LIMIT 3`;
       const result = await db.selectMultipleRows(query);
 

@@ -12,7 +12,7 @@ import { minutes } from "./utils";
 
 const insertRatings = (movieId: number, ratings: Rating[]) => {
   return (
-    `insert into movie_ratings (user_id, movie_id, rating, time_created) values` +
+    `INSERT INTO movie_ratings (user_id, movie_id, rating, time_created) VALUES` +
     ratings.map(rating => `(${rating.userId}, ${movieId}, ${rating.rating}, '${escape(rating.time_created)}')`).join(",")
   );
 };
