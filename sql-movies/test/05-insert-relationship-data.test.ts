@@ -32,7 +32,9 @@ const insertMovieGenres = (
   genres: string[],
   genreRows: GenreRow[]
 ): string => {
-  throw new Error(`todo`);
+  return `INSERT INTO movie_genres (movie_id, genre_id) VALUES ${
+    genres.map(genre => `(${movieId},${genreRows.find(x => x.genre === genre)!.id})`).join(",")
+  }`;
 };
 
 const insertMovieActors = (
@@ -40,7 +42,9 @@ const insertMovieActors = (
   actors: string[],
   actorRows: ActorRow[]
 ): string => {
-  throw new Error(`todo`);
+  return `INSERT INTO movie_actors (movie_id, actor_id) VALUES ${
+    actors.map(actor => `(${movieId},${actorRows.find(x => x.full_name === actor)!.id})`).join(",")
+  }`;
 };
 
 const insertMovieDirectors = (
@@ -48,7 +52,9 @@ const insertMovieDirectors = (
   directors: string[],
   directorRows: DirectorRow[]
 ): string => {
-  throw new Error(`todo`);
+  return `INSERT INTO movie_directors (movie_id, director_id) VALUES ${
+    directors.map(director => `(${movieId},${directorRows.find(x => x.full_name === director)!.id})`).join(",")
+  }`;
 };
 
 const insertMovieKeywords = (
@@ -56,7 +62,9 @@ const insertMovieKeywords = (
   keywords: string[],
   keywordRows: KeywordRow[]
 ): string => {
-  throw new Error(`todo`);
+  return `INSERT INTO movie_keywords (movie_id, keyword_id) VALUES ${
+    keywords.map(keyword => `(${movieId},${keywordRows.find(x => x.keyword === keyword)!.id})`).join(",")
+  }`;
 };
 
 const insertMovieProductionCompanies = (
@@ -64,7 +72,9 @@ const insertMovieProductionCompanies = (
   productionCompanies: string[],
   productionCompanyRows: ProductionCompanyRow[]
 ): string => {
-  throw new Error(`todo`);
+  return `INSERT INTO movie_production_companies (movie_id, company_id) VALUES ${
+    productionCompanies.map(company => `(${movieId},${productionCompanyRows.find(x => x.company_name === company)!.id})`).join(",")
+  }`;
 };
 
 describe("Insert Relationship Data", () => {
@@ -79,7 +89,7 @@ describe("Insert Relationship Data", () => {
     "should insert genre relationship data",
     async done => {
       const movies = await CsvLoader.movies();
-      const genreRows = (await db.selectMultipleRows(`todo`)) as GenreRow[];
+      const genreRows = (await db.selectMultipleRows(`SELECT * FROM genres`)) as GenreRow[];
       const moviesByImdbId = _.groupBy(await CsvLoader.movies(), "imdbId");
 
       for (const imdbId of Object.keys(moviesByImdbId)) {
@@ -115,7 +125,7 @@ describe("Insert Relationship Data", () => {
     "should insert actor relationship data",
     async done => {
       const movies = await CsvLoader.movies();
-      const actorRows = (await db.selectMultipleRows(`todo`)) as ActorRow[];
+      const actorRows = (await db.selectMultipleRows(`SELECT * FROM actors`)) as ActorRow[];
       const moviesByImdbId = _.groupBy(await CsvLoader.movies(), "imdbId");
 
       for (const imdbId of Object.keys(moviesByImdbId)) {
@@ -154,7 +164,7 @@ describe("Insert Relationship Data", () => {
     async done => {
       const movies = await CsvLoader.movies();
       const directorRows = (await db.selectMultipleRows(
-        `todo`
+        `SELECT * FROM directors`
       )) as DirectorRow[];
       const moviesByImdbId = _.groupBy(await CsvLoader.movies(), "imdbId");
 
@@ -189,7 +199,7 @@ describe("Insert Relationship Data", () => {
     "should insert keyword relationship data",
     async done => {
       const movies = await CsvLoader.movies();
-      const keywordRows = (await db.selectMultipleRows(`todo`)) as KeywordRow[];
+      const keywordRows = (await db.selectMultipleRows(`SELECT * FROM keywords`)) as KeywordRow[];
       const moviesByImdbId = _.groupBy(await CsvLoader.movies(), "imdbId");
 
       for (const imdbId of Object.keys(moviesByImdbId)) {
@@ -228,7 +238,7 @@ describe("Insert Relationship Data", () => {
     async done => {
       const movies = await CsvLoader.movies();
       const productionCompanyRows = (await db.selectMultipleRows(
-        `todo`
+        `SELECT * FROM production_companies`
       )) as ProductionCompanyRow[];
       const moviesByImdbId = _.groupBy(await CsvLoader.movies(), "imdbId");
 
